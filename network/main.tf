@@ -11,6 +11,8 @@ resource "aws_vpc" "main" {
   }
 }
 
+#* Create/reference Route table #*
+
 #* Create Subnets *#
 resource "aws_subnet" "app-1a" {
   vpc_id            = aws_vpc.main.id
@@ -37,4 +39,4 @@ resource "aws_subnet" "db-1a" {
 
 #* Create NACLs *#
 
-
+#* Create SGs *#
