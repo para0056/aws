@@ -6,6 +6,10 @@ data "aws_subnet_ids" "all" {
   vpc_id = data.aws_vpc.main.id
 }
 
+data "aws_security_group" "selected" {
+  id = var.security_group_id
+}
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
