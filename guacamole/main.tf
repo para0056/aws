@@ -72,6 +72,6 @@ resource "aws_instance" "guac" {
 
 
 # Provision and attach EIP
-resource "aws_eip" "lb" {
+resource "aws_eip" "main" {
   instance = aws_instance.guac.id
 }
