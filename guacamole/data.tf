@@ -2,8 +2,8 @@ data "aws_vpc" "main" {
  id = var.vpc_id
 }
 
-data "aws_subnet_ids" "all" {
-  vpc_id = data.aws_vpc.main.id
+data "aws_subnet" "public1a" {
+  id = var.subnet_id
 }
 
 data "aws_security_group" "selected" {
