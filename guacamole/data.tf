@@ -2,32 +2,26 @@ data "aws_vpc" "main" {
  id = var.vpc_id
 }
 
-data "aws_subnet" "public1a" {
-  id = var.subnet_id
+data "aws_subnet_ids" "all" {
+  vpc_id = data.aws_vpc.main.id
 }
 
-data "aws_security_group" "selected" {
-  id = var.security_group_id
+output "subnet_ids {
+  value = aws_subnet_ids.all.*.id
 }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
+data "aws_ami" "amazon-linux-2" {
+ most_recent = true
 
-  owners = ["amazon"]
 
-  filter {
-    name = "name"
+ filter {
+   name   = "owner-alias"
+   values = ["amazon"]
+ }
 
-    values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
-    ]
-  }
 
-  filter {
-    name = "owner-alias"
-
-    values = [
-      "amazon",
-    ]
-  }
+ filter {
+   name   = "name"
+   values = ["amzn2-ami-hvm*"]
+ }
 }

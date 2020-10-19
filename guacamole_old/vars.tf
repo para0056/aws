@@ -1,0 +1,12 @@
+variable "access_key" {}
+variable "secret_key" {}
+variable "rds_database_name" {}
+variable "rds_master_username" {}
+variable "rds_master_password" {}
+variable "public_subnet1" {}
+variable "public_subnet2" {}
+variable "private_subnet1" {}
+variable "private_subnet2" {}
+variable "natgw_vpc_id" {}
+variable "onprem_public_cidr_block" {}
+variable "vpc_cidr_block" {}
