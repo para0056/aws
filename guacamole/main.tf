@@ -15,9 +15,9 @@ locals {
   sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   cd /opt
   git clone https://github.com/para0056/guacamole-docker-compose.git
-  cd guacamole-docker-compose
-  ./prepare.sh
-  docker-compose up -d
+#  cd guacamole-docker-compose
+#  ./prepare.sh
+#  docker-compose up -d
 EOF
 }
 
