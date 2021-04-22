@@ -62,65 +62,65 @@ resource "aws_kms_key" "main" {
 # Create EC2 in public subnet
 # User data to install and deploy Apache Guacamole using Docker Compose
 
-module "ec2" {
-  source = "terraform-aws-modules"
+# module "ec2" {
+#   source = "terraform-aws-modules"
 
-  instance_count = 1
+#   instance_count = 1
 
-  name = var.ec2_name
-  ami = data.aws_ami.amazon-linux-2.id
+#   name = var.ec2_name
+#   ami = data.aws_ami.amazon-linux-2.id
 
-  instance_type = "t3.medium"
-  subnet_id = tolist(data.aws_subnet>ids.all.ids)[0]
-
-  vpc_security_group_ids = aws_security_group.main.id
-
-  user_data_base64 = base64encode(local.user_data)
-
-  associate_public_ip_address = true
-
-  root_block_device = [
-    {
-      volume_type = "gp2"
-      volume_size = 25
-    }
-  ]
-
-  ebs_block_device = [
-    {
-      device_name= "/dev/xvda"
-      device_type = "gp2"
-      volume_size = 25
-      encrypted = true
-      kms_key_id = aws_kms_key.main.id
-
-    }
-  ]
-}
-
-# resource "aws_instance" "main" {
-#   ami           = data.aws_ami.amazon_linux.id
 #   instance_type = "t3.medium"
-#   subnet_id = data.aws_subnet.public1a.id
+#   subnet_id = tolist(data.aws_subnet>ids.all.ids)[0]
 
-#   key_pair = "guac-key-pair" # Must exsits
+#   vpc_security_group_ids = aws_security_group.main.id
 
 #   user_data_base64 = base64encode(local.user_data)
 
-#   vpc_security_group_ids = aws_security_group.guacsg.id
+#   associate_public_ip_address = true
 
+#   root_block_device = [
+#     {
+#       volume_type = "gp2"
+#       volume_size = 25
+#     }
+#   ]
+
+#   ebs_block_device = [
+#     {
+#       device_name= "/dev/xvda"
+#       device_type = "gp2"
+#       volume_size = 25
+#       encrypted = true
+#       kms_key_id = aws_kms_key.main.id
+
+#     }
+#   ]
 # }
 
-# resource "aws_ebs_volume" "main" {
-#   availability_zone = "ca-central-1a"
-#   size = 25
-# }
+resource "aws_instance" "main" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t3.medium"
+  subnet_id = data.aws_subnet.public1a.id
 
-# resource "aws_volume_attachment" "main" {
-#   device_name = "/dev/xvda"
-#   volume_id = aws_ebs_volume.main.id
-#   instance_id = aws_instance.main.id
-# }
+  key_pair = "guac-key-pair" # Must exsits
+
+  user_data_base64 = base64encode(local.user_data)
+
+  vpc_security_group_ids = aws_security_group.guacsg.id
+
+}
+
+resource "aws_ebs_volume" "main" {
+  availability_zone = "ca-central-1a"
+  size = 25
+}
+
+resource "aws_volume_attachment" "main" {
+  device_name = "/dev/xvda"
+  volume_id = aws_ebs_volume.main.id
+  instance_id = aws_instance.main.id
+}
 
 # Provision and attach EIP
 resource "aws_eip" "main" {

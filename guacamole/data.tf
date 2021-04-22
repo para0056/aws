@@ -6,7 +6,7 @@ data "aws_subnet_ids" "all" {
   vpc_id = data.aws_vpc.main.id
 }
 
-output "subnet_ids {
+output "subnet_ids" {
   value = aws_subnet_ids.all.*.id
 }
 
